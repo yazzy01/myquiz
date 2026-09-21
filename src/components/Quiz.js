@@ -8,13 +8,23 @@ const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
-  const [userAnswers, setUserAnswers] = useState([]);
+  const [, setUserAnswers] = useState([]);
 
   const handleAnswer = (answer) => {
-    setUserAnswers([...userAnswers, answer]);
-    if (answer === questions[currentQuestion].correctAnswer) {
-      setScore(score + 1);
-    }
+    setUserAnswers((previousAnswers) => {
+      const previousAnswer = previousAnswers[currentQuestion];
+      const correctAnswer = questions[currentQuestion].correctAnswer;
+      const wasCorrect = previousAnswer === correctAnswer;
+      const isCorrect = answer === correctAnswer;
+
+      setScore((previousScore) => (
+        previousScore - Number(wasCorrect) + Number(isCorrect)
+      ));
+
+      const updatedAnswers = [...previousAnswers];
+      updatedAnswers[currentQuestion] = answer;
+      return updatedAnswers;
+    });
   };
 
   const handleNext = () => {
