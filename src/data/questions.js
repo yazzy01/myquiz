@@ -381,10 +381,12 @@ export const analyticsData = {
   }
 };
 
-export default {
+const questionBank = {
   questions,
   categories,
   difficultyLevels,
   quizConfigurations,
   analyticsData
 };
+
+export default questionBank;
